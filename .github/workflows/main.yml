@@ -1,0 +1,25 @@
+name: Unit Tests & Lint
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby 2.7
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+      - name: Bundle install
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3
+      - name: Rubocop lab_1
+        run: cd basics/degree_conversion/ && bundle exec rspec
+      - name: RSpec lab_1
+        run: cd basics/degree_conversion/ && bundle exec rspec
+      - name: Rubocop lab_2
+        run: cd basics/economic_calculator/ && bundle exec rspec
+      - name: RSpec lab_2
+        run: cd basics/economic_calculator/ && bundle exec rspec
